@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>JSON Practice</title>
+  <!-- Including CSS & JS in this file for ease of demoing-->
+  <style type="text/css">
+    * {
+      box-sizing: border-box;
+    }
+    form {
+      margin-left: 5%;
+      padding: 1rem;
+      border: 1px gray solid;
+      width: 90%;
+    }
+    label:after {
+      content: "";
+      display: table;
+      margin-bottom: 1rem;
+    }
+    img {
+      margin-left: 5%;
+      width: 90%;
+    }
+    @media(min-width: 700px){
+      form {
+        width: 40%;
+        float: left;
+      }
+      img {
+        width: 40%;
+        float: right;
+        margin-right: 5%;
+      }
+    }
+    .bright {
+      color: #047180;
+    }
+  </style>
+</head>
+<body>
+  <h1>Let's Play House</h1>
+  <p>Houses!</p>
+  <p>They're all different.</p>
+
+  <div id="list-container">
+  </div>
+
+  <img src="http://rilane.com/images/2016148/cool-dog-house-with-roofdeck.jpg" alt="bulldog standing atop very cool doghouse">
+
+  <form name="house">
+    <label> Exterior:
+      <input type="text" name="exterior">
+    </label>
+    <label> Roof:
+      <input type="text" name="roof">
+    </label>
+    <label> Bedrooms:
+      <input type="number" name="bedrooms">
+    </label>
+    <label> Bathrooms:
+      <input type="number" name="bathrooms">
+    </label>
+    <label> Square Footage:
+      <input type="number" name="sqft">
+    </label>
+    <label> Year Built:
+      <input type="number" name="built">
+    </label>
+    <fieldset>
+      <legend>Has a Yard?</legend>
+      <label>
+        <input type="radio" name="yard" value="true">
+        Yes
+      </label>
+      <label>
+        <input type="radio" name="yard" value="no">
+        No
+      </label>
+    </fieldset>
+    <input type="submit">
+  </form>
+
+<script type="text/javascript">
+  var house = {
+    "exterior": "cedar siding",
+    "roof": "spanish tile",
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "sqft": 1200,
+    "built": 1987,
+    "hasYard": true
+  }
+
+  var house2 = {
+    "exterior": "hardiplank",
+    "bedrooms": 3,
+    "built": 1928,
+    "roof": "wood"
+  }
+
+  var house3 = {
+    "exterior": "brick",
+    "bedrooms": 4,
+    "built": 1929,
+    "roof": "shingle"
+  }
+
+  for (let key in house){
+    // console.log(key);
+    // console.log(typeof house[key]);
+  }
+
+  var neighborhood = {
+    zipcode: "98122",
+    coffeeshops: 19,
+    awardsWon: [
+      "Best Holiday Lights, 2015",
+      "Most Dog Friendly, 2016"
+    ],
+    nicestHouse: house,
+    history: {
+      firstHouseBuilt: 1923,
+      postOfficeBuilt: 1941,
+      highSchoolBuilt: 1950
+    },
+    houses: [house, house2, house3]
+  }
+
+  function drawList() {
+    var parent = document.getElementById("list-container");
+
+    //clear out existing contents
+    parent.innerHTML = ""
+    var ul = document.createElement("ul");
+    parent.appendChild(ul);
+    for (var i = 0; i < neighborhood.houses.length; i++) {
+      console.log(neighborhood.houses[i].roof);
+
+      var li = document.createElement("li");
+      li.innerHTML = neighborhood.houses[i].roof;
+      ul.appendChild(li);
+    }
+    parent.appendChild(ul);
+  }
+
+
+  function houseBuilder() {
+    console.log("building a house");
+    event.preventDefault();
+    var newHouse = {roof: form.roof.value};
+
+    neighborhood.houses.push(newHouse);
+
+    drawList();
+  }
+
+  window.onload = function() {
+    drawList();
+
+    //select the form, attach housebuilder as onsubmit handler
+    var form = document.querySelector("form");
+    form.onsubmit = "houseBuilder";
+
+  }
+
+
+
+</script>
+</body>
+</html>
